@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -19,17 +20,29 @@ public class Main {
                 >""");
 
         Scanner scn = new Scanner(System.in);
-        String variant = scn.nextLine();
+        int variant;
+        while(!scn.hasNextInt()) {
+            System.out.print("Invalid value! Please, try again: ");
+            scn.next();
+        }
+        variant = scn.nextInt();
 
-        switch (Integer.parseInt(variant)) {
+        switch (variant) {
             case 1 -> addVertex(graph);
             case 2 -> addEdge(graph);
-            case 3 -> {
-                String start = readVertex("start"), end = readVertex("end");
-                System.out.println(graph.findAllPathsBetweenVertices(start, end));
-            }
+            case 3 -> printWays(graph);
             case 4 -> System.exit(0);
             default -> System.out.println("Something went wrong... Please, try again.");
+        }
+    }
+
+    private static void printWays(Graph graph) {
+        String start = readVertex("start"), end = readVertex("end");
+        List<String> ways = graph.findAllPathsBetweenVertices(start, end);
+
+        int i = 1;
+        for (String way : ways) {
+            System.out.println(i + ". " + way);
         }
     }
 
